@@ -3,6 +3,8 @@
 *-json.log
 *-json.log.*
 
+logs/*
+!logs/.gitkeep
 result/
 __pycache__/
 *.py[cod]
