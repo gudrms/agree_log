@@ -15,6 +15,7 @@ from pathlib import Path
 from log_performance_analyzer import LogPerformanceAnalyzer
 
 
+PROJECT_DIR = Path(__file__).resolve().parent
 LOG_PATTERNS = ("*.log", "*.log.*", "*-json.log", "*-json.log.*")
 
 
@@ -25,7 +26,7 @@ def configure_console() -> None:
 
 
 def collect_log_files(paths: list[str], recursive: bool) -> list[Path]:
-    targets = paths or ["logs"]
+    targets = [str(PROJECT_DIR / "logs")] if not paths else paths
     files: list[Path] = []
 
     for target in targets:
@@ -65,7 +66,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "-o",
         "--out-dir",
-        default="result",
+        default=str(PROJECT_DIR / "result"),
         help="Directory to write the report. Default: result",
     )
     return parser.parse_args()
@@ -94,6 +95,7 @@ def main() -> int:
         print("No readable log files were analyzed.")
         return 1
 
+    analyzer.sort_logs()
     analyzer.extract_errors()
     analyzer.extract_response_times()
     analyzer.analyze_log_gaps()
