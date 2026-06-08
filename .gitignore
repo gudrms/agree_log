@@ -1,0 +1,11 @@
+*.log
+*.log.*
+*-json.log
+*-json.log.*
+
+result/
+__pycache__/
+*.py[cod]
+
+.idea/
+nul
